@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(255, 0, 123);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username or Email" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a></p>
+    </div>
+
+    <div id="signupContainer" style="display: none;">
+        <div id="container">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <input type="text" id="signupUsername" placeholder="Username or Email" required>
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <button type="button" onclick="signup()">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
+        </div>
+    </div>
+
+    <script>
+        var users = {};
+
+        function toggleForm() {
+            var loginContainer = document.getElementById('container');
+            var signupContainer = document.getElementById('signupContainer');
+            
+            loginContainer.style.display = (loginContainer.style.display === 'none') ? 'block' : 'none';
+            signupContainer.style.display = (signupContainer.style.display === 'none') ? 'block' : 'none';
+        }
+
+        function login() {
+            var username = document.getElementById('loginUsername').value;
+            var password = document.getElementById('loginPassword').value;
+
+            // Check if the user exists
+            if (users[username]) {
+                // Check if the password matches
+                if (users[username] === password) {
+                    alert('Login successful!');
+                } else {
+                    alert('Invalid password. Please try again.');
+                }
+            } else {
+                alert('Invalid username. Please try again.');
+            }
+        }
+
+        function signup() {
+            var username = document.getElementById('signupUsername').value;
+            var password = document.getElementById('signupPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+
+            // Save signup credentials
+            users[username] = password;
+
+            alert('Signup successful!');
+        }
+    </script>
+</body>
+</html>
